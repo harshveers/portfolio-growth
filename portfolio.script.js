@@ -6,8 +6,13 @@ _.forEach(graphData.performanceGraphDataList, function(graphPoint){
 	grothData.push([new Date(graphPoint.Date), (graphPoint.Close - graphPoint.Open)]);
 });
 
+var grothDataPercentage = [];
+_.forEach(graphData.performanceGraphDataList, function(graphPoint){
+	grothDataPercentage.push([new Date(graphPoint.Date), ((graphPoint.Close - graphPoint.Open)/graphPoint.Close)*100]);
+});
+
 grothData.unshift(['Date', 'Growth']);
-console.log(grothData);
+grothDataPercentage.unshift(['Date', 'Percent Growth']);
 
 
 google.charts.load('current', {'packages':['corechart']});
@@ -25,4 +30,16 @@ function drawChart() {
 	var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
 	chart.draw(data, options);
+	
+	var dataPercent = google.visualization.arrayToDataTable(grothDataPercentage);
+
+	var optionsPercent = {
+	  title: 'Portfolio Percent Growth',
+	  curveType: 'function',
+	  legend: { position: 'bottom' }
+	};
+
+	var chartPercent = new google.visualization.LineChart(document.getElementById('curve_chart_percent'));
+
+	chartPercent.draw(dataPercent, optionsPercent);
 }
