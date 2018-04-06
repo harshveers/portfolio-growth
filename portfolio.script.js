@@ -24,6 +24,7 @@ function drawChart() {
 	var options = {
 	  title: 'Portfolio Growth',
 	  curveType: 'function',
+	  height: 700,
 	  series: {
 		  0: {targetAxisIndex: 0},
 		  1: {targetAxisIndex: 1}
@@ -50,5 +51,6 @@ function drawChart() {
 
 	var chartPercent = new google.visualization.LineChart(document.getElementById('curve_chart_percent'));
 
-	chartPercent.draw(dataPercent, optionsPercent);
+	// Uncomment this to show percent graph separately.
+	//chartPercent.draw(dataPercent, optionsPercent);
 }
